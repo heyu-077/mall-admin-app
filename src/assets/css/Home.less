@@ -1,0 +1,47 @@
+.home{
+    .menu-list{
+        width: 180px;
+        height: 100%;
+        position: fixed;
+      .ant-menu{
+        height: 100%; 
+      }
+    }
+    .main-app{
+        width: calc(100% - 180px);
+        position: fixed;
+        left: 180px;
+        transition: left 0.3s;
+        &.menu-unfold{
+            left: 80px;
+        }
+    }
+    .main-header{
+        padding-left: 10px;
+        padding-right: 20px;
+        height: 50px;
+        line-height: 50px;
+        border-bottom: 1px solid #eee;
+    }
+    .breadcrump{
+        display: inline-block;
+        margin-left: 20px;
+    }
+    .use-info{
+        float: right;
+        cursor: pointer;
+        text-align: center;
+        li:not(:first-child){
+             display: none;
+             &:hover{
+                 background-color: #999;
+             }
+        }
+        li{
+            padding:0 30px;
+        }
+        &:hover li{
+            display: block;
+        }
+    }
+}
