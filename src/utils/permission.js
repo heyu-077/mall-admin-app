@@ -8,6 +8,8 @@ const roleToRoute = {
     name: 'ProductList',
   }, {
     name: 'ProductAdd',
+  }, {
+    name: 'ProductEdit',
   }],
   admit: [{
     name: 'Product',
@@ -15,6 +17,8 @@ const roleToRoute = {
     name: 'ProductList',
   }, {
     name: 'ProductAdd',
+  }, {
+    name: 'ProductEdit',
   }, {
     name: 'Category',
   }],

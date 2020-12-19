@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <left-menu />
+    <left-menu :key="key"></left-menu>
     <div :class="{ 'main-app': true, 'menu-unfold': $store.state.collapsed }">
       <top-header />
       <router-view></router-view>
@@ -15,8 +15,13 @@ import TopHeader from './components/header.vue';
 export default {
   data() {
     return {
-      collapsed: false,
+      key: new Date().getTime(),
     };
+  },
+  watch: {
+    $route() {
+      this.key = new Date().getTime();
+    },
   },
   components: {
     LeftMenu,

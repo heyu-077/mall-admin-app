@@ -2,12 +2,17 @@
   <div class="product-list">
     <!-- 搜索框部分 -->
     <search-box @submit="searchSubmit" :categoryList="categoryList" />
+    <a-button class="product-add-btn">
+      <router-link :to="{name:'ProductAdd'}">添加商品</router-link>
+    </a-button>
     <!-- 表格部分 -->
     <product-table
       :data="tableData"
       :page="page"
       @change="changePage"
       :categoryList="categoryList"
+      @edit='editProduct'
+      @remove='removeProduct'
     />
   </div>
 </template>
@@ -62,7 +67,7 @@ export default {
       });
     },
     searchSubmit(form) {
-      console.log(form);
+      // console.log(form);
       this.searchForm = form;
       this.getTableData();
     },
@@ -70,6 +75,42 @@ export default {
       this.page = page;
       this.getTableData();
     },
+    editProduct(record) {
+      this.$router.push({
+        name: 'ProductEdit',
+        params: {
+          id: record.id,
+        },
+      });
+    },
+    removeProduct(record) {
+      this.$confirm({
+        title: '确认删除',
+        content: () => <div style="color:red;">{`确认删除标题为${record.title}的商品吗?`}</div>,
+        onOk: () => {
+          api.remove({
+            id: record.id,
+          }).then(() => {
+            this.getTableData();
+          });
+        },
+        onCancel() {
+          console.log('Cancel');
+        },
+        class: 'confirm-box',
+      });
+    },
   },
 };
 </script>
+
+<style lang="less" scoped>
+.product-list{
+   position: relative;
+   .product-add-btn{
+     position: absolute;
+     right: 5px;
+     top: 14px;
+   }
+}
+</style>
