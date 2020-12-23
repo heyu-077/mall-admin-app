@@ -72,6 +72,17 @@ export default {
       fileList: [],
     };
   },
+  props: ['form'],
+  created() {
+    if (this.form.images.length > 0) {
+      this.fileList = this.form.images.map((item, index) => ({
+        uid: index,
+        name: `image-${index}.png`,
+        status: 'done',
+        url: item,
+      }));
+    }
+  },
   methods: {
     async handlePreview(file) {
       const obj = file;
@@ -84,17 +95,29 @@ export default {
     handleCancel() {
       this.previewVisible = false;
     },
-    handleChange({ file, fileList, event }) {
-      console.log('change:', file, fileList, event);
+    handleChange({ file, fileList }) {
+      // console.log('change:', file, fileList, event);
+      if (file.status === 'done') {
+        this.form.images.push(file.response.data.url);
+      } else if (file.status === 'removed') {
+        const { url } = file.response.data;
+        this.form.images = this.form.images.filter((item) => item !== url);
+      }
       this.fileList = fileList;
     },
     next() {
-      this.$emit('next', this.form);
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          this.$emit('next', this.form);
+          return true;
+        }
+        console.log('error submit!!');
+        return false;
+      });
     },
     prev() {
       this.$emit('prev');
     },
   },
-  props: ['form'],
 };
 </script>

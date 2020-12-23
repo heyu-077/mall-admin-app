@@ -12,6 +12,7 @@
 <script>
 import baseInfo from '@/components/baseDetail.vue';
 import saleInfo from '@/components/saleDetail.vue';
+import api from '@/api/product';
 
 export default {
   data() {
@@ -39,6 +40,14 @@ export default {
       },
     };
   },
+  created() {
+    const { id } = this.$route.params;
+    if (id) {
+      api.detail(id).then((res) => {
+        this.form = res;
+      });
+    }
+  },
   components: {
     baseInfo,
     saleInfo,
@@ -51,6 +60,22 @@ export default {
       };
       if (this.current === 1) {
         // 提交数据
+        // console.log(this.form);
+        if (this.$route.params.id) {
+          api.edit(this.form).then(() => {
+            this.$message.success('修改成功');
+            this.$router.push({
+              name: 'ProductList',
+            });
+          });
+        } else {
+          api.add(this.form).then(() => {
+            this.$message.success('添加成功');
+            this.$router.push({
+              name: 'ProductList',
+            });
+          });
+        }
       } else {
         this.current += 1;
       }
