@@ -1,5 +1,5 @@
 module.exports = {
-  pulicPath: "/",
+  pulicPath: "./",
   css: {
     loaderOptions: {
       less: {
