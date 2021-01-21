@@ -6,5 +6,4 @@ module.exports = {
       },
     },
   },
-  outputDir: 'docs',
 };
